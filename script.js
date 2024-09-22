@@ -1,39 +1,76 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const API_KEY = d9cb6808172d43b69e4cf56a808d0637; // Replace with your actual API key
-    const NEWS_API_URL = `https://newsapi.org/v2/everything?q=tesla&from=2024-08-22&sortBy=publishedAt?country=us&apiKey=d9cb6808172d43b69e4cf56a808d0637;
-    const newsContainer = document.getElementById('news-container');
+const API_KEY = "499d03534f224e8890dcd1f95376001c"
+const url = "https://newsapi.org/v2/everything?q="
 
-    // Fetch news articles from the NewsAPI
-    fetch(NEWS_API_URL)
-        .then(response => response.json())
-        .then(data => {
-            const articles = data.articles;
-            if (articles && articles.length > 0) {
-                articles.forEach(article => {
-                    // Create a news card for each article
-                    const newsCard = document.createElement('div');
-                    newsCard.classList.add('news-card');
-                    const articleImage = article.urlToImage || 'https://via.placeholder.com/300'; // Placeholder for missing images
-                    const articleTitle = article.title;
-                    const articleDescription = article.description || 'No description available.';
-                    const articleUrl = article.url;
-                    const articleSource = article.source.name;
 
-                    newsCard.innerHTML = `
-                        <img src="${articleImage}" alt="${articleTitle}">
-                        <h3>${articleTitle}</h3>
-                        <p>${articleDescription}</p>
-                        <a href="${articleUrl}" target="_blank">Read More</a>
-                        <p><small>Source: ${articleSource}</small></p>
-                    `;
-                    newsContainer.appendChild(newsCard);
-                });
-            } else {
-                newsContainer.innerHTML = '<p>No news available at the moment.</p>';
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching news:', error);
-            newsContainer.innerHTML = '<p>Unable to load news at this time.</p>';
-        });
-});
+
+async function fetchData(query){
+    const res = await fetch(`${url}${query}&apiKey=${API_KEY}`)
+    const data = await res.json()
+    return data
+}
+fetchData("all").then(data => renderMain(data.articles))
+
+//menu btn
+let mobilemenu = document.querySelector(".mobile")
+let menuBtn = document.querySelector(".menuBtn")
+let menuBtnDisplay = true;
+
+menuBtn.addEventListener("click",()=>{
+    mobilemenu.classList.toggle("hidden")
+})
+
+
+//render news 
+function renderMain(arr){
+    let mainHTML = ''
+    for(let i = 0 ; i < arr.length ;i++){
+        if(arr[i].urlToImage){
+        mainHTML += ` <div class="card">
+                        <a href=${arr[i].url}>
+                        <img src=${arr[i].urlToImage} lazy="loading" />
+                        <h4>${arr[i].title}</h4>
+                        <div class="publishbyDate">
+                            <p>${arr[i].source.name}</p>
+                            <span>•</span>
+                            <p>${new Date(arr[i].publishedAt).toLocaleDateString()}</p>
+                        </div>
+                        <div class="desc">
+                           ${arr[i].description}
+                        </div>
+                        </a>
+                     </div>
+        `
+        }
+    }
+
+    document.querySelector("main").innerHTML = mainHTML
+}
+
+
+const searchBtn = document.getElementById("searchForm")
+const searchBtnMobile = document.getElementById("searchFormMobile")
+const searchInputMobile = document.getElementById("searchInputMobile") 
+const searchInput = document.getElementById("searchInput")
+
+searchBtn.addEventListener("submit",async(e)=>{
+    e.preventDefault()
+    console.log(searchInput.value)
+
+    const data = await fetchData(searchInput.value)
+    renderMain(data.articles)
+
+})
+searchBtnMobile.addEventListener("submit",async(e)=>{
+    e.preventDefault()
+    const data = await fetchData(searchInputMobile.value)
+    renderMain(data.articles)
+})
+
+
+async function Search(query){
+    const data = await fetchData(query)
+    renderMain(data.articles)
+}
+
+
+
