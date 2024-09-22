@@ -1,4 +1,4 @@
-const API_KEY = 'd9cb6808172d43b69e4cf56a808d0637'; // Replace with your NewsAPI key
+const API_KEY = d9cb6808172d43b69e4cf56a808d0637; // Replace with your NewsAPI key
 const newsContainer = document.getElementById('news-container');
 
 // Function to fetch news data
