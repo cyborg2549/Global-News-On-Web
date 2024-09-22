@@ -1,39 +1,40 @@
-const API_KEY = 'd9cb6808172d43b69e4cf56a808d0637'; // Replace with your NewsAPI key
-const newsContainer = document.getElementById('news-container');
+document.addEventListener('DOMContentLoaded', function() {
+    const API_KEY = 'd9cb6808172d43b69e4cf56a808d0637'; // Replace with your actual API key
+    const NEWS_API_URL = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`;
+    const newsContainer = document.getElementById('news-container');
 
-// Function to fetch news data
-async function fetchNews() {
-    const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`;
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        displayNews(data.articles);
-    } catch (error) {
-        console.error("Error fetching news: ", error);
-    }
-}
+    // Fetch news articles from the NewsAPI
+    fetch(NEWS_API_URL)
+        .then(response => response.json())
+        .then(data => {
+            const articles = data.articles;
+            if (articles && articles.length > 0) {
+                articles.forEach(article => {
+                    // Create a news card for each article
+                    const newsCard = document.createElement('div');
+                    newsCard.classList.add('news-card');
+                    
+                    const articleImage = article.urlToImage || 'https://via.placeholder.com/300'; // Placeholder for missing images
+                    const articleTitle = article.title;
+                    const articleDescription = article.description || 'No description available.';
+                    const articleUrl = article.url;
+                    const articleSource = article.source.name;
 
-// Function to display news articles
-function displayNews(articles) {
-    newsContainer.innerHTML = ''; // Clear existing news
-    articles.forEach(article => {
-        const newsItem = document.createElement('div');
-        newsItem.classList.add('news-item');
-
-        const newsHTML = `
-            <img src="${article.urlToImage || 'default-image.jpg'}" alt="${article.title}">
-            <h2>${article.title}</h2>
-            <p>${article.description}</p>
-            <a href="${article.url}" target="_blank">Read more</a>
-        `;
-
-        newsItem.innerHTML = newsHTML;
-        newsContainer.appendChild(newsItem);
-    });
-}
-
-// Fetch news when page loads
-window.onload = function() {
-    fetchNews();
-    setInterval(fetchNews, 3600000); // Refresh news every 1 hour (3600000 ms)
-};
+                    newsCard.innerHTML = `
+                        <img src="${articleImage}" alt="${articleTitle}">
+                        <h3>${articleTitle}</h3>
+                        <p>${articleDescription}</p>
+                        <a href="${articleUrl}" target="_blank">Read More</a>
+                        <p><small>Source: ${articleSource}</small></p>
+                    `;
+                    newsContainer.appendChild(newsCard);
+                });
+            } else {
+                newsContainer.innerHTML = '<p>No news available at the moment.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching news:', error);
+            newsContainer.innerHTML = '<p>Unable to load news at this time.</p>';
+        });
+});
