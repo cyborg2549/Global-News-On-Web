@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const API_KEY = 'd9cb6808172d43b69e4cf56a808d0637'; // Replace with your actual API key
-    const NEWS_API_URL = `https://newsapi.org/v2/everything?q=tesla&from=2024-08-22&sortBy=publishedAt?country=us&apiKey=${API_KEY}`;
+    const API_KEY = d9cb6808172d43b69e4cf56a808d0637; // Replace with your actual API key
+    const NEWS_API_URL = `https://newsapi.org/v2/everything?q=tesla&from=2024-08-22&sortBy=publishedAt?country=us&apiKey=${d9cb6808172d43b69e4cf56a808d0637}`;
     const newsContainer = document.getElementById('news-container');
 
     // Fetch news articles from the NewsAPI
