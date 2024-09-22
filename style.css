@@ -1,82 +1,68 @@
-/* Global Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
     color: #333;
-    line-height: 1.6;
 }
 
 header {
-    background-color: #333;
-    color: white;
-    padding: 10px 0;
+    background-color: #3E64FF;
+    padding: 20px;
     text-align: center;
-}
-
-h1 {
-    font-size: 2.5rem;
-    margin: 0;
-}
-
-main {
-    margin: 20px auto;
-    width: 90%;
-    max-width: 1200px;
+    color: white;
+    font-size: 2em;
 }
 
 #news-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.news-item {
-    background-color: white;
-    margin: 10px;
+    justify-content: center;
     padding: 20px;
+}
+
+.news-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 15px;
     border-radius: 8px;
-    width: 48%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
+    width: 300px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
 }
 
-.news-item:hover {
-    transform: translateY(-5px);
+.news-card:hover {
+    transform: scale(1.05);
 }
 
-.news-item img {
-    max-width: 100%;
+.news-card img {
+    width: 100%;
     height: auto;
-    border-radius: 5px;
+    border-radius: 8px 8px 0 0;
 }
 
-.news-item h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
+.news-card h3 {
+    font-size: 1.2em;
+    margin: 10px 0;
 }
 
-.news-item p {
-    font-size: 1rem;
-    margin-bottom: 10px;
+.news-card p {
+    font-size: 0.9em;
+    color: #666;
 }
 
-.news-item a {
-    color: #333;
+.news-card a {
     text-decoration: none;
+    color: #3E64FF;
     font-weight: bold;
 }
 
 footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #333;
+    background-color: #3E64FF;
     color: white;
+    padding: 10px;
+    text-align: center;
     position: fixed;
     width: 100%;
     bottom: 0;
