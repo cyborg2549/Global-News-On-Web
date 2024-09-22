@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Create a news card for each article
                     const newsCard = document.createElement('div');
                     newsCard.classList.add('news-card');
-                    
                     const articleImage = article.urlToImage || 'https://via.placeholder.com/300'; // Placeholder for missing images
                     const articleTitle = article.title;
                     const articleDescription = article.description || 'No description available.';
